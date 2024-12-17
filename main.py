@@ -1,9 +1,11 @@
 from data_loader import load_dataset
 from data_quality_metrics import calculate_scores, overall_quality_score
 from report_generation import generate_detailed_report, generate_quality_summary, generate_ydata_profiling_report
+import matplotlib
+matplotlib.use("Agg")
 
 if __name__ == "__main__":
-    dataset_path = "Amazon_Reviews.csv"
+    dataset_path = "detail_ds.csv"
     df = load_dataset(dataset_path)
 
     detailed_scores_df = calculate_scores(df)
