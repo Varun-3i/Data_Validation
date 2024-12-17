@@ -1,17 +1,42 @@
 from data_loader import load_dataset
 from data_quality_metrics import calculate_scores, overall_quality_score
-from report_generation import generate_detailed_report, generate_quality_summary, generate_ydata_profiling_report
+from detailed_report import generate_detailed_report
+from quality_summary import generate_quality_summary
+from data_profiling_report import generate_ydata_profiling_report 
 import matplotlib
+
+# Ensure matplotlib works in headless environments
 matplotlib.use("Agg")
 
 if __name__ == "__main__":
-    dataset_path = "detail_ds.csv"
-    df = load_dataset(dataset_path)
+    try:
+        # Step 1: Load the dataset
+        dataset_path = "detail_ds.csv"
+        df = load_dataset(dataset_path)
 
-    detailed_scores_df = calculate_scores(df)
-    overall_score = overall_quality_score(detailed_scores_df)
+        # Validate if the dataset is loaded properly
+        if df is None or df.empty:
+            raise ValueError("The dataset is empty or failed to load. Check the file path and content.")
 
-    detailed_report_content = generate_detailed_report(df, detailed_scores_df, overall_score)
-    quality_summary_content = generate_quality_summary(df, detailed_scores_df)
+        # Step 2: Calculate detailed scores for each column
+        detailed_scores_df = calculate_scores(df)
 
-    generate_ydata_profiling_report(df, detailed_report_content, quality_summary_content)
+        # Step 3: Calculate the overall data quality score
+        overall_score = overall_quality_score(detailed_scores_df)
+
+        # Step 4: Generate the detailed report content
+        detailed_report_content = generate_detailed_report(df, detailed_scores_df, overall_score)
+
+        # Step 5: Generate the quality summary content
+        quality_summary_content = generate_quality_summary(df, detailed_scores_df)
+
+        # Step 6: Generate the full YData Profiling report
+        output_path = "data_quality_report.html"
+        generate_ydata_profiling_report(df, detailed_report_content, quality_summary_content, output_path)
+
+        print(f"Data quality report generated successfully and saved as '{output_path}'!")
+
+    except FileNotFoundError as e:
+        print(f"Error: {e}. Check if the file '{dataset_path}' exists.")
+    except Exception as e:
+        print(f"An error occurred: {e}")
