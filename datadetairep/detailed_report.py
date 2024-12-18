@@ -6,95 +6,14 @@ import base64
 
 def generate_detailed_report(df, detailed_scores_df, overall_score):
     try:
-        # Define the metrics list
-        metrics = ['Completeness', 'Uniqueness', 'Validity', 'Timeliness', 'Consistency', 'Accuracy', 'Reliability']
+        # Define the metrics list in the specified order
+        metrics = ['Completeness', 'Timeliness', 'Validity', 'Accuracy', 'Uniqueness', 'Consistency']
 
         html_content = []
 
-        # General Styling for the Report (with increased visualization size)
+        # Link the external CSS file
         html_content.append("""
-        <style>
-            body {
-                font-family: Arial, sans-serif;
-                margin: 0;
-                padding: 0;
-                background-color: #f4f7f9;
-                color: #2c3e50;
-            }
-            h1, h2, h3 {
-                text-align: center;
-                margin-top: 10px;
-                color: #2c3e50;
-            }
-            .container {
-                width: 90%;
-                margin: 20px auto;
-                padding: 20px;
-                background-color: #ffffff;
-                box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-                border-radius: 10px;
-            }
-            table {
-                width: 100%;
-                border-collapse: collapse;
-                margin: 20px 0;
-                background: #fff;
-                border-radius: 8px;
-                box-shadow: 0 6px 12px rgba(0, 0, 0, 0.1);
-            }
-            th, td {
-                padding: 12px;
-                border: 1px solid #ddd;
-                text-align: center;
-            }
-            th {
-                background-color: #2c3e50;
-                color: white;
-                text-transform: uppercase;
-            }
-            tr:nth-child(even) {
-                background-color: #f8f9fa;
-            }
-            tr:hover {
-                background-color: #eaf4f9;
-            }
-            .overall-score {
-                text-align: center;
-                font-size: 22px;
-                color: #004e92;
-                font-weight: bold;
-            }
-            select {
-                display: block;
-                margin: 20px auto;
-                padding: 10px;
-                width: 30%;
-                text-align: center;
-                border: 1px solid #ccc;
-                border-radius: 6px;
-            }
-            .chart-container {
-                display: none;
-                text-align: center;
-                margin-top: 20px;
-            }
-            .chart-container img {
-                max-width: 80%;
-                width: 80%;
-                margin: auto;
-                border-radius: 10px;
-                box-shadow: 0 6px 12px rgba(0, 0, 0, 0.2);
-            }
-            /* Added styling for side-by-side layout of charts */
-            .charts-side-by-side {
-                display: flex;
-                justify-content: space-around;
-                gap: 40px;
-            }
-            .chart {
-                max-width: 60%; /* Increase the size of visualizations */
-            }
-        </style>
+        <link rel="stylesheet" type="text/css" href="datadetairep\\Gde.css">
         """)
 
         # Start of Content
@@ -111,7 +30,7 @@ def generate_detailed_report(df, detailed_scores_df, overall_score):
         html_content.append("</table>")
 
         # Overall Quality Metrics Table
-        html_content.append("<h4>Average Quality scores</h4>")
+        html_content.append("<h4>Average Quality Scores</h4>")
         html_content.append("<table>")
         html_content.append("<tr><th>Metric</th><th>Average Score (%)</th></tr>")
         for metric in metrics:
@@ -155,7 +74,6 @@ def generate_detailed_report(df, detailed_scores_df, overall_score):
             heatmap = base64.b64encode(buffer.getvalue()).decode('utf-8')
             buffer.close()
             plt.close()
-
 
             charts_data[col] = {'bar_chart': bar_chart, 'heatmap': heatmap}
 

@@ -1,8 +1,8 @@
-from data_loader import load_dataset
-from data_quality_metrics import calculate_scores, overall_quality_score
-from detailed_report import generate_detailed_report
-from quality_summary import generate_quality_summary
-from data_profiling_report import generate_ydata_profiling_report 
+from dataloD.data_loader import load_dataset
+from dataquame.data_quality_metrics import calculate_scores, overall_quality_score
+from datadetairep.detailed_report import generate_detailed_report
+from dataquaclms.quality_summary import generate_quality_summary
+from dataProfrep.data_profiling_report import generate_ydata_profiling_report 
 import matplotlib
 
 # Ensure matplotlib works in headless environments
@@ -11,7 +11,7 @@ matplotlib.use("Agg")
 if __name__ == "__main__":
     try:
         # Step 1: Load the dataset
-        dataset_path = "detail_ds.csv"
+        dataset_path = "Ds'S\\detail_ds.csv"
         df = load_dataset(dataset_path)
 
         # Validate if the dataset is loaded properly
